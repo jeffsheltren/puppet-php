@@ -41,6 +41,6 @@ class php::params {
   # Global (non-OS specific) params.
   $cli_ensure = 'installed'
   $mod_php_ensure = 'installed'
-  $manage_httpd_php_conf = 'true'
-  $mod_ini_notify_httpd = 'true'
+  $manage_httpd_php_conf = true
+  $mod_ini_notify_httpd = true
 }
