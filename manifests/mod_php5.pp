@@ -24,7 +24,7 @@ class php::mod_php5 (
     notify  => Service[$httpd_service_name],
   }
 
-  if($manage_httpd_php_conf == 'true') {
+  if($manage_httpd_php_conf == true) {
     # Custom httpd conf snippet
     file { "${httpd_conf_dir}/php.conf":
       content => template('php/httpd/php.conf.erb'),
@@ -33,7 +33,7 @@ class php::mod_php5 (
     }
   }
 
-  if($notify_httpd_service == 'true') {
+  if($notify_httpd_service == true) {
     # Notify the httpd service for any php.ini changes too
     File[$inifile] ~> Service[$httpd_service_name]
   }
