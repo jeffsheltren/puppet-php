@@ -1,4 +1,6 @@
-class php::params {
+class php::params (
+  $php_package_prefix = 'php',
+) {
   case $::osfamily {
     'Debian': {
       $php_package_name = 'php5'
@@ -17,12 +19,12 @@ class php::params {
       $httpd_conf_dir = '/etc/apache2/conf.d'
     }
     default: {
-      $php_package_name = 'php'
-      $php_apc_package_name = 'php-pecl-apc'
-      $common_package_name = 'php-common'
-      $cli_package_name = 'php-cli'
+      $php_package_name = $php_package_prefix
+      $php_apc_package_name = "${php_package_prefix}-pecl-apc"
+      $common_package_name = "${php_package_prefix}-common"
+      $cli_package_name = "${php_package_prefix}-cli"
       $php_conf_dir = '/etc/php.d'
-      $fpm_package_name = 'php-fpm'
+      $fpm_package_name = "${php_package_prefix}-fpm"
       $fpm_service_name = 'php-fpm'
       $fpm_pool_dir = '/etc/php-fpm.d'
       $fpm_conf_dir = '/etc'

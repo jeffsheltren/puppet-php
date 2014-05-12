@@ -17,7 +17,6 @@
 #
 define php::fpm::conf (
   $ensure                    = 'present',
-  $fpm_package_name          = undef,
   $user                      = 'apache',
   $group                     = undef,
   $listen                    = '127.0.0.1:9000',
@@ -65,17 +64,12 @@ define php::fpm::conf (
   # Hack-ish to default to user for group too
   $group_final = $group ? { undef => $user, default => $group }
 
-  $fpm_package_name_final = $fpm_package_name {
-    undef   => $::php::params::fpm_package_name,
-    default => $fpm_package_name,
-  }
-
   if ( $ensure == 'absent' ) {
 
     file { "${php::params::fpm_pool_dir}/${pool}.conf":
       notify  => Service[$php::params::fpm_service_name],
       ensure  => absent,
-      require => Package[$fpm_package_name_final],
+      require => Package[$php::params::fpm_package_name],
     }
 
   } else {
@@ -86,7 +80,7 @@ define php::fpm::conf (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      require => Package[$fpm_package_name_final],
+      require => Package[$php::params::fpm_package_name],
     }
 
   }
